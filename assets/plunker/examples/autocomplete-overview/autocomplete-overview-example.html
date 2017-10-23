@@ -1,0 +1,21 @@
+<form class="example-form">
+  <md-form-field class="example-full-width">
+    <input mdInput placeholder="mainAddressLine" aria-label="mainAddressLine" [mdAutocomplete]="toggleJson ? 'off' : 'auto'" [formControl]="stateCtrl">
+    <md-autocomplete #auto="mdAutocomplete">
+        <md-option *ngFor="let cand of candidates" [value]="cand.formattedStreetAddress + ' ' +cand.formattedLocationAddress">
+          <span>{{ cand.formattedStreetAddress }}</span>
+          <small>{{cand.formattedLocationAddress}}</small>
+        </md-option>
+    </md-autocomplete>
+  </md-form-field>
+
+  <br />
+  <!--<pre>{{toggleJson ? 'auto' : 'off'}}</pre>-->
+  <mat-slide-toggle
+    [(ngModel)]="toggleJson"
+    name="toggle">
+    Show full response?
+  </mat-slide-toggle>
+
+  <pre *ngIf="toggleJson" >{{geoResponse | json }}</pre>
+</form>
