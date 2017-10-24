@@ -1,0 +1,103 @@
+<html><head></head><body><div class="docs-markdown"><h1 class="docs-markdown-h1">API reference for Interactive Geocoding - Find postal info</h1><pre class="docs-markdown-pre"><code class="lang-json docs-markdown-code">{
+  <span class="hljs-attr">"preferences"</span>: {
+    <span class="hljs-attr">"maxReturnedCandidates"</span>: <span class="hljs-number">10</span>
+  },
+  <span class="hljs-attr">"address"</span>: {
+    <span class="hljs-attr">"mainAddressLine"</span>: <span class="hljs-string">"Albany"</span>
+  }
+}
+</code></pre>
+<h2 class="docs-markdown-h2">Preferences</h2><table class="docs-markdown-table">
+<thead>
+<tr class="docs-markdown-tr">
+<th class="docs-markdown-th">Parameter</th>
+<th class="docs-markdown-th">Default</th>
+<th class="docs-markdown-th">Description</th>
+</tr>
+</thead>
+<tbody class="docs-markdown-tbody">
+<tr class="docs-markdown-tr">
+<td class="docs-markdown-td">maxReturnedCandidates</td>
+<td class="docs-markdown-td">10</td>
+<td class="docs-markdown-td">Max number of possible candidates in a response.</td>
+</tr>
+</tbody>
+</table>
+<h2 class="docs-markdown-h2">Address</h2><table class="docs-markdown-table">
+<thead>
+<tr class="docs-markdown-tr">
+<th class="docs-markdown-th">Parameter</th>
+<th class="docs-markdown-th">type</th>
+<th class="docs-markdown-th">Description</th>
+</tr>
+</thead>
+<tbody class="docs-markdown-tbody">
+<tr class="docs-markdown-tr">
+<td class="docs-markdown-td">mainAddressLine</td>
+<td class="docs-markdown-td">string</td>
+<td class="docs-markdown-td">A value to use for search criteria. It could possibly be address, place name post code etc.</td>
+</tr>
+</tbody>
+</table>
+<h2 class="docs-markdown-h2">Response</h2><pre class="docs-markdown-pre"><code class="lang-json docs-markdown-code">{
+  <span class="hljs-attr">"totalPossibleCandidates"</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">"totalMatches"</span>: <span class="hljs-number">1</span>,
+  <span class="hljs-attr">"candidates"</span>: [
+    {
+      <span class="hljs-attr">"precisionLevel"</span>: <span class="hljs-number">0</span>,
+      <span class="hljs-attr">"formattedStreetAddress"</span>: <span class="hljs-string">"1 GLOBAL VW"</span>,
+      <span class="hljs-attr">"formattedLocationAddress"</span>: <span class="hljs-string">"TROY, NY 12180"</span>,
+      <span class="hljs-attr">"identifier"</span>: <span class="hljs-literal">null</span>,
+      <span class="hljs-attr">"precisionCode"</span>: <span class="hljs-literal">null</span>,
+      <span class="hljs-attr">"sourceDictionary"</span>: <span class="hljs-literal">null</span>,
+      <span class="hljs-attr">"matching"</span>: <span class="hljs-literal">null</span>,
+      <span class="hljs-attr">"geometry"</span>: {
+        <span class="hljs-attr">"type"</span>: <span class="hljs-string">"Point"</span>,
+        <span class="hljs-attr">"coordinates"</span>: [
+          <span class="hljs-number">-73.70252500000001</span>,
+          <span class="hljs-number">42.68323</span>
+        ],
+        <span class="hljs-attr">"crs"</span>: {
+          <span class="hljs-attr">"type"</span>: <span class="hljs-string">"name"</span>,
+          <span class="hljs-attr">"properties"</span>: {
+            <span class="hljs-attr">"name"</span>: <span class="hljs-string">"epsg:4326"</span>
+          }
+        }
+      },
+      <span class="hljs-attr">"address"</span>: {
+        <span class="hljs-attr">"mainAddressLine"</span>: <span class="hljs-string">""</span>,
+        <span class="hljs-attr">"addressLastLine"</span>: <span class="hljs-string">""</span>,
+        <span class="hljs-attr">"placeName"</span>: <span class="hljs-literal">null</span>,
+        <span class="hljs-attr">"areaName1"</span>: <span class="hljs-string">"NY"</span>,
+        <span class="hljs-attr">"areaName2"</span>: <span class="hljs-literal">null</span>,
+        <span class="hljs-attr">"areaName3"</span>: <span class="hljs-string">"TROY"</span>,
+        <span class="hljs-attr">"areaName4"</span>: <span class="hljs-literal">null</span>,
+        <span class="hljs-attr">"postCode1"</span>: <span class="hljs-string">"12180"</span>,
+        <span class="hljs-attr">"postCode2"</span>: <span class="hljs-string">""</span>,
+        <span class="hljs-attr">"country"</span>: <span class="hljs-string">"USA"</span>,
+        <span class="hljs-attr">"addressNumber"</span>: <span class="hljs-string">""</span>,
+        <span class="hljs-attr">"streetName"</span>: <span class="hljs-string">""</span>,
+        <span class="hljs-attr">"unitType"</span>: <span class="hljs-string">""</span>,
+        <span class="hljs-attr">"unitValue"</span>: <span class="hljs-string">""</span>,
+        <span class="hljs-attr">"customFields"</span>: {
+          <span class="hljs-attr">"RECORD_TYPE"</span>: <span class="hljs-string">"2"</span>,
+          <span class="hljs-attr">"PREFERRED_FORMATTED_STRING"</span>: <span class="hljs-string">"1 GLOBAL VW, TROY, NY 12180"</span>
+        }
+      },
+      <span class="hljs-attr">"ranges"</span>: [
+        {
+          <span class="hljs-attr">"placeName"</span>: <span class="hljs-literal">null</span>,
+          <span class="hljs-attr">"lowHouse"</span>: <span class="hljs-string">"1"</span>,
+          <span class="hljs-attr">"highHouse"</span>: <span class="hljs-literal">null</span>,
+          <span class="hljs-attr">"side"</span>: <span class="hljs-string">"UNKNOWN"</span>,
+          <span class="hljs-attr">"oddEvenIndicator"</span>: <span class="hljs-string">"BOTH"</span>,
+          <span class="hljs-attr">"units"</span>: [],
+          <span class="hljs-attr">"customValues"</span>: {}
+        }
+      ]
+    }
+  ],
+  <span class="hljs-attr">"customValues"</span>: {}
+}
+</code></pre>
+</div></body></html>
