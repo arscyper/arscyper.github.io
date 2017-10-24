@@ -1,0 +1,108 @@
+<span class="hljs-keyword">import</span> {Component, Output, OnInit} <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/core'</span>;
+<span class="hljs-keyword">import</span> {FormControl, FormBuilder, FormGroup} <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/forms'</span>;
+
+<span class="hljs-keyword">import</span> {EmptyObservable} <span class="hljs-keyword">from</span> <span class="hljs-string">'rxjs/observable/EmptyObservable'</span>;
+<span class="hljs-keyword">import</span> {Observable} <span class="hljs-keyword">from</span> <span class="hljs-string">'rxjs/Observable'</span>;
+<span class="hljs-keyword">import</span> {Http, Response} <span class="hljs-keyword">from</span> <span class="hljs-string">'@angular/http'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'rxjs/add/operator/startWith'</span>;
+<span class="hljs-keyword">import</span> <span class="hljs-string">'rxjs/add/operator/map'</span>;
+<span class="hljs-keyword">import</span> {TJsonViewerModule } <span class="hljs-keyword">from</span> <span class="hljs-string">'t-json-viewer'</span>;
+
+<span class="hljs-comment">/**
+ * @title Autocomplete overview
+ */</span>
+<span class="hljs-meta">@Component</span>({
+  selector: <span class="hljs-string">'autocomplete-restrict-area-example'</span>,
+  templateUrl: <span class="hljs-string">'autocomplete-restrict-area-example.html'</span>,
+  styleUrls: [<span class="hljs-string">'autocomplete-restrict-area-example.css'</span>]
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> AutocompleteRestrictAreaExample {
+  restrictedArea: FormGroup;
+  geoResponse: <span class="hljs-built_in">any</span>;
+  geoRequest: <span class="hljs-built_in">any</span>;
+  candidates: Candidate[];
+  downloading: <span class="hljs-built_in">boolean</span>;
+  latitude: <span class="hljs-built_in">number</span>;
+  longitude: <span class="hljs-built_in">number</span>;
+  <span class="hljs-keyword">private</span> API_URL = <span class="hljs-string">'https://www.ggs-docs.tk/Geocode/rest/GeocodeService/interactive'</span>;
+
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"><span class="hljs-keyword">private</span> formBuilder: FormBuilder, <span class="hljs-keyword">private</span> http:Http</span>) {
+    <span class="hljs-keyword">this</span>.restrictedArea = formBuilder.group({
+      address : <span class="hljs-string">''</span>,
+      country : <span class="hljs-string">''</span>,
+      distance : <span class="hljs-number">5</span>,
+      distanceUnits : <span class="hljs-string">'MILES'</span>,
+      latitude : <span class="hljs-literal">null</span>,
+      longitude: <span class="hljs-literal">null</span>
+    });
+    <span class="hljs-keyword">this</span>.downloading = <span class="hljs-literal">false</span>;
+
+    <span class="hljs-keyword">this</span>.restrictedArea.valueChanges.debounceTime(<span class="hljs-number">1000</span>).subscribe( <span class="hljs-function"><span class="hljs-params">data</span> =&gt;</span> {
+      <span class="hljs-keyword">this</span>.geoResponse = <span class="hljs-literal">null</span>;
+      <span class="hljs-keyword">this</span>.candidates = [];
+      <span class="hljs-keyword">this</span>.downloading = <span class="hljs-literal">true</span>;
+      <span class="hljs-keyword">this</span>.getCandidates(data).subscribe(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> {
+        <span class="hljs-keyword">this</span>.geoResponse = res.json();
+        <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.geoResponse != <span class="hljs-literal">null</span>){
+          <span class="hljs-keyword">this</span>.candidates = <span class="hljs-keyword">this</span>.geoResponse.candidates;
+        }
+        <span class="hljs-keyword">this</span>.downloading = <span class="hljs-literal">false</span>;
+      });
+    });
+  }
+
+  <span class="hljs-keyword">public</span> setCurrentPosition() {
+    <span class="hljs-keyword">this</span>.latitude = <span class="hljs-number">42.6560116</span>;
+    <span class="hljs-keyword">this</span>.longitude = <span class="hljs-number">-73.7563842</span>;
+    <span class="hljs-keyword">if</span> (<span class="hljs-string">"geolocation"</span> <span class="hljs-keyword">in</span> navigator) {
+      navigator.geolocation.getCurrentPosition(<span class="hljs-function">(<span class="hljs-params">position</span>) =&gt;</span> {
+        <span class="hljs-keyword">this</span>.latitude = position.coords.latitude;
+        <span class="hljs-keyword">this</span>.longitude = position.coords.longitude;
+        <span class="hljs-keyword">this</span>.restrictedArea.patchValue({
+          latitude : <span class="hljs-keyword">this</span>.latitude,
+          longitude: <span class="hljs-keyword">this</span>.longitude
+        });
+      });
+    }<span class="hljs-keyword">else</span>{
+      <span class="hljs-keyword">this</span>.restrictedArea.patchValue({
+        latitude : <span class="hljs-keyword">this</span>.latitude,
+        longitude: <span class="hljs-keyword">this</span>.longitude
+      });
+    }
+  }
+
+  getCandidates(data: <span class="hljs-built_in">any</span>) {
+    <span class="hljs-keyword">let</span> origin = <span class="hljs-literal">null</span>;
+    <span class="hljs-keyword">if</span>(data.latitude != <span class="hljs-literal">null</span> &amp;&amp; data.longitude != <span class="hljs-literal">null</span>
+      &amp;&amp; data.latitude != <span class="hljs-number">0</span> &amp;&amp; data.longitude != <span class="hljs-number">0</span>){
+      origin = [data.longitude, data.latitude];
+    }
+    <span class="hljs-keyword">if</span>(data.address &amp;&amp; data.address.length &lt; <span class="hljs-number">3</span>){
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> EmptyObservable();
+    }
+    <span class="hljs-keyword">this</span>.geoRequest = {
+      <span class="hljs-string">"preferences"</span>: {
+        <span class="hljs-string">"maxReturnedCandidates"</span>: <span class="hljs-number">10</span>,
+        <span class="hljs-string">"clientCoordSysName"</span> : <span class="hljs-string">"EPSG:4326"</span>,
+        <span class="hljs-string">"originXY"</span> : origin,
+        <span class="hljs-string">"distance"</span> : data.distance,
+        <span class="hljs-string">"distanceUnits"</span> : data.distanceUnits
+      },
+      <span class="hljs-string">"address"</span>: {
+        <span class="hljs-string">"mainAddressLine"</span>: data.address,
+        <span class="hljs-string">"country"</span> : data.country
+      }
+    };
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.getData(<span class="hljs-keyword">this</span>.geoRequest);
+  }
+
+
+  getData(body: <span class="hljs-built_in">any</span>):Observable&lt;<span class="hljs-built_in">any</span>&gt;{
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.http.post(<span class="hljs-keyword">this</span>.API_URL, body);
+  }
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">interface</span> Candidate{
+  formattedStreetAddress: <span class="hljs-built_in">string</span>;
+  formattedLocationAddress: <span class="hljs-built_in">string</span>;
+}
