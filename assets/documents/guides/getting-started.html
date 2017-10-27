@@ -1,0 +1,66 @@
+<html><head></head><body><div class="docs-markdown"><p class="docs-markdown-p">By default Global Geocoding SDK on premise solution does not have
+  data required to use API's. So, before you can start geocding you must install datasets.</p>
+
+        <h3 id="step-1-running-cli" class="docs-header-link docs-markdown-h3">
+          <div header-link="step-1-running-cli"></div>
+          Step 1: Running CLI
+        </h3>
+      <p class="docs-markdown-p">On windows run the <code class="docs-markdown-code">cli.cmd</code> and on any linux/unix system run the <code class="docs-markdown-code">cli.sh</code></p>
+<p class="docs-markdown-p">cli can also be run in batch mode by creating a file with all commands that needs to be executed.</p>
+<h2 class="docs-markdown-h2">commands.cli</h2><pre class="docs-markdown-pre"><code class="lang-bash docs-markdown-code">extract --s <span class="hljs-string">"/spd/download/location"</span> --d <span class="hljs-string">"/spd/extract/location"</span>
+configure --s <span class="hljs-string">"/spd/extract/location"</span> --d <span class="hljs-string">"/ggs/configuration/location"</span>
+</code></pre>
+<p class="docs-markdown-p">Running all the commands inside <code class="docs-markdown-code">commands.cli</code> in batch command mode</p>
+<pre class="docs-markdown-pre"><code class="lang-bash docs-markdown-code">./cli.sh --cmdfile=commands.cli
+</code></pre>
+
+        <h3 id="step-2-extracting-datasets" class="docs-header-link docs-markdown-h3">
+          <div header-link="step-2-extracting-datasets"></div>
+          Step 2: Extracting datasets
+        </h3>
+      <pre class="docs-markdown-pre"><code class="lang-bash docs-markdown-code">extract --s <span class="hljs-string">"/spd/download/location"</span> --d <span class="hljs-string">"/spd/extract/location"</span>
+</code></pre>
+<h2 class="docs-markdown-h2">Parameters</h2><table class="docs-markdown-table">
+<thead>
+<tr class="docs-markdown-tr">
+<th class="docs-markdown-th">Parameter</th>
+<th class="docs-markdown-th">Description</th>
+</tr>
+</thead>
+<tbody class="docs-markdown-tbody">
+<tr class="docs-markdown-tr">
+<td class="docs-markdown-td">--s</td>
+<td class="docs-markdown-td">Directory containing <code class="docs-markdown-code">.spd</code> files or <code class="docs-markdown-code">.spd</code> file. If directory is provided then all <code class="docs-markdown-code">.spd</code> files from the given directory will be extracted.</td>
+</tr>
+<tr class="docs-markdown-tr">
+<td class="docs-markdown-td">--d</td>
+<td class="docs-markdown-td">Destination directory where the data will be extracted.</td>
+</tr>
+</tbody>
+</table>
+
+        <h3 id="step-3-configuring-datasets" class="docs-header-link docs-markdown-h3">
+          <div header-link="step-3-configuring-datasets"></div>
+          Step 3: Configuring datasets
+        </h3>
+      <pre class="docs-markdown-pre"><code class="lang-bash docs-markdown-code">configure --s <span class="hljs-string">"/spd/extract/location"</span> --d <span class="hljs-string">"/ggs/configuration/location"</span>
+</code></pre>
+<h2 class="docs-markdown-h2">Parameters</h2><table class="docs-markdown-table">
+<thead>
+<tr class="docs-markdown-tr">
+<th class="docs-markdown-th">Parameter</th>
+<th class="docs-markdown-th">Description</th>
+</tr>
+</thead>
+<tbody class="docs-markdown-tbody">
+<tr class="docs-markdown-tr">
+<td class="docs-markdown-td">--s</td>
+<td class="docs-markdown-td">Directory or comma seperated list of directories where data has been extracted.</td>
+</tr>
+<tr class="docs-markdown-tr">
+<td class="docs-markdown-td">--d</td>
+<td class="docs-markdown-td">Directory where configuration file should be created. Any existing configuration will be overwritten.</td>
+</tr>
+</tbody>
+</table>
+</div></body></html>

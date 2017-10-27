@@ -1,0 +1,24 @@
+<html><head></head><body><div class="docs-markdown"><h1 class="docs-markdown-h1">API Overview for Interactive Geocoding - TypeAhead</h1><h2 class="docs-markdown-h2">Simple TypeAhead</h2><p class="docs-markdown-p">For creating simple input field for autocomplete it does not require big payload for request. It can be accomplished using only <code class="docs-markdown-code">mainAddressLine</code>. Also, if you want to control how many candidates are returned then you could also provide <code class="docs-markdown-code">maxReturnedCandidates</code>. 
+This would allow any app to accomplish autocomplete for single line address. </p>
+
+        <h3 id="url" class="docs-header-link docs-markdown-h3">
+          <div header-link="url"></div>
+          URL
+        </h3>
+      <pre class="docs-markdown-pre"><code class="lang-bash docs-markdown-code">http://localhost:8082/Geocode/rest/GeocodeService/interactive
+</code></pre>
+
+        <h3 id="post-content" class="docs-header-link docs-markdown-h3">
+          <div header-link="post-content"></div>
+          POST content
+        </h3>
+      <pre class="docs-markdown-pre"><code class="lang-json docs-markdown-code">{
+  <span class="hljs-attr">"preferences"</span>: {
+    <span class="hljs-attr">"maxReturnedCandidates"</span>: <span class="hljs-number">10</span>
+  },
+  <span class="hljs-attr">"address"</span>: {
+    <span class="hljs-attr">"mainAddressLine"</span>: <span class="hljs-string">"Albany"</span>
+  }
+}
+</code></pre>
+</div></body></html>
